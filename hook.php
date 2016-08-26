@@ -2,6 +2,7 @@
 
 // pour test commit git
 
+
 /*
  * retourne un print_r ou var_dump entouré de balises <hr>
  * 
