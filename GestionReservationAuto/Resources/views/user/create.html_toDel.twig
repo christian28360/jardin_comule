@@ -1,0 +1,21 @@
+{%set menu = 'user' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+
+    <h3>Ajouter un Utilisateur</h3>
+
+    {% include 'src/GestionReservationAuto/Resources/views/user/fragments/form.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            // Focus sur le premier champ d'input
+            $("input:first").focus();
+        });
+    </script> 
+{% endblock %}

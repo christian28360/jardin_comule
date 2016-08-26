@@ -1,0 +1,24 @@
+{%set menu = 'perimetre' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+
+{% block content %}
+    <h3>Ajouter un périmètre</h3>
+    {{ form_start(form, { 'attr': { 'role': 'form' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+    {# empty Twig template #}
+    <div class="row">
+        <div class="form-group col-md-6">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <input type="submit" name="submit" value="Valider" class="btn btn-default" />
+            <a href="{{ path('gestion-reservation-auto-perimetre-readall') }}"class="btn btn-danger">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}{# empty Twig template #}

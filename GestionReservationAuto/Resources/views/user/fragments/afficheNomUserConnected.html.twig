@@ -1,0 +1,11 @@
+<div class="alert alert-info row">
+    <div class="col-xs-6 text-left">
+        <b>{{ app['gra.sourceAgent'].agePrenomUsuel }} {{ app['gra.sourceAgent'].ageNomUsuel }}</b>
+    </div>
+    <div class="col-xs-6 text-right">
+        Hiérarchique : <b>{{ app['gra.sourceAgent'].responsableHierarchique.fullName }}</b> / 
+        {{ app['gra.sourceAgent'].responsableHierarchique.ctcMessagerie }}
+        {#            {% if environment == 'dev' %} / {{ hierarchique.ageCodeDt }}{% endif %}#}
+        / {{ app['gra.sourceAgent'].responsableHierarchique.ageCodeDt }}
+    </div>
+</div>

@@ -1,0 +1,35 @@
+{{ form_start(form, { 'attr': { 'role': 'form', 'class': 'form-horizontal' }, 'method': 'POST' }) }}
+{{ form_errors(form) }}
+
+<div class="row">
+    {{ form_row(form.adresse, { 'form_type': 'horizontal'}) }}
+    {{ form_row(form.cp, { 'form_type': 'horizontal'}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.ville, { 'form_type': 'horizontal'}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.telephone, { 'form_type': 'horizontal'}) }}
+    {{ form_row(form.distanceDT, { 'form_type': 'horizontal'}) }}
+</div>
+
+{%if (mode == 'advanced') %}
+    <div class="row">
+        {{ form_row(form.grade, { 'form_type': 'horizontal'}) }}
+        {{ form_row(form.voitureAttribue, { 'form_type': 'horizontal'}) }}
+    </div>
+{%endif%}
+
+<div class="row">
+    {{ form_row(form.perimetre, { 'form_type': 'horizontal'}) }}
+</div>
+
+<div class="row">
+    <div class="col-xs-12 text-right">        
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.annuler) }}
+    </div>
+</div>
+{{ form_end(form) }}

@@ -1,0 +1,13 @@
+<h3>
+    {% if form is defined %} 
+        {#            {{ dump (form.vars.value)}} #}
+        {#            {{ dump (form.vars.value.isNew)}} #}
+        {% if form.vars.value.isNew is defined %} 
+            {{ form.vars.value.isNew ? 'Création' : 'Modification' }} 
+        {% else %}
+            Ajout
+        {% endif %}
+    {% endif %}
+    d'un{{ genre == 'f' ? 'e' : '' }} 
+    {{ menu }}
+</h3>

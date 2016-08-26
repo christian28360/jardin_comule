@@ -1,0 +1,50 @@
+<div class="row row-datetime">
+    <div class="col-lg-2 text-right">
+        {{ form_label(form.dateDebut) }}
+    </div>
+    <div class="col-lg-2">
+        {{ form_widget(form.dateDebut.date, { 'attr': { 'class': 'form-control datepicker-widget dateDebut' } }) }}
+    </div>
+    <div class="col-lg-1">
+        {{ form_widget(form.dateDebut.time.hour, { 'attr': { 'class': 'form-control changeable' } }) }}
+    </div>
+    <div class="col-lg-1">
+        {{ form_widget(form.dateDebut.time.minute, { 'attr': { 'class': 'form-control changeable' } }) }}
+    </div>
+
+    <div class="col-lg-2 text-right">
+        {{ form_label(form.dateFin) }}
+    </div>
+    <div class="col-lg-2">
+        {{ form_widget(form.dateFin.date, { 'attr': { 'class': 'form-control datepicker-widget dateFin' } }) }}
+    </div>
+    <div class="col-lg-1">
+        {{ form_widget(form.dateFin.time.hour, { 'attr': { 'class': 'form-control changeable' } }) }}
+    </div>
+    <div class="col-lg-1">
+        {{ form_widget(form.dateFin.time.minute, { 'attr': { 'class': 'form-control changeable' } }) }}
+    </div>
+</div>
+<div class="row">
+    {{ form_row(form.recurrence, { 'form_type': 'horizontal'}) }}
+    {{ form_row(form.nbRecurrence, { 'form_type': 'horizontal'}) }}
+</div>
+    
+<div class="row">
+    {{ form_row(form.depart, { 'form_type': 'horizontal'}) }}
+    {{ form_row(form.destination, { 'form_type': 'horizontal'}) }}
+</div>
+    
+<div class="row">
+    {{ form_row(form.motif, { 'form_type': 'horizontal'}) }}
+    {{ form_row(form.distance, { 'form_type': 'horizontal'}) }}
+</div>
+<div class="row">
+    <div class="col-xs-12 text-right">
+        {{ form_widget(form.save) }}
+    </div>
+</div>
+    <div class="col-md-6">
+        Les dates de début et de fin permettent de créer le modèle de réservation qui sera répété suivant les choix de récurrence.
+    </div>
+</div>

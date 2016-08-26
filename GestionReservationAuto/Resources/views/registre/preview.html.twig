@@ -1,0 +1,40 @@
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+{%set menu = 'registre' %}
+
+{% block content %}
+    <h3>Registre du {{reg.dateDebut|date('d/m/Y')}} au {{reg.dateFin|date('d/m/Y')}}</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <b>Agent :</b> {{reg.user.nom}} {{reg.user.prenom}}<br/><br/>
+            <b>Identifiant :</b> {{reg.user.idUser}}<br/><br/>
+{#            <b>Service :</b> {{reg.user.service.regate}} {{reg.user.service.libelle}}<br/><br/>#}
+            <div class="clearfix"></div>
+            <table class="table table-hover" id="myTable">
+                <thead>
+                    <th>Voiture</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                    <th>Date création</th>
+                    <th>Destination</th>
+                    <th>Distance (km)</th>
+                    <th>Motif</th>
+                </thead>
+                {% for res in lesRes %}
+                     <tr>
+                        <td>{{res.voiture.vehicule.vehImmat}}</td>
+                        <td>{{res.dateDebut|date('d/m/Y H')}}h</td>
+                        <td>{{res.dateFin|date('d/m/Y H')}}h</td>
+                        <td>{{res.dateCreation|date('d/m/Y')}}</td>
+                        <td>{{res.destination}}</td>
+                        <td>{{res.distance}}</td>
+                        <td>{{res.motif}}</td>
+                    </tr>
+                {%endfor%}
+            </table>
+            <div class="col-md-2"><a href="{{ path('gestion-reservation-auto-registre-signature-agent', {'id': reg.idRegistre}) }}"class="btn btn-success">Signer</a></div>
+            <div class="col-md-2"><a href="{{ path('gestion-reservation-auto-registre-delete', {'id': reg.idRegistre}) }}"class="btn btn-danger">Annuler registre</a></div>
+        </div>
+    </div>
+{% endblock %}

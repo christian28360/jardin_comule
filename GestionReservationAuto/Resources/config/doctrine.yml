@@ -1,0 +1,85 @@
+#
+# DOCTRINE
+################################################################################
+doctrine:
+    orm:
+        configuration:
+            orm.ems.options:
+                gestionReservationAuto:
+                    connection: gestionReservationAuto
+                    resolve_target_entities:
+                        DTC\Common\Interfaces\GestionRh\ISourceAgent: DTC\Modules\GestionReservationAuto\Entity\GestionRh\SourceAgent
+                        DTC\Common\Interfaces\GestionRh\IAgentRh: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Agent
+                        DTC\Common\Interfaces\GestionRh\IAssignmentRh: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Assignment
+                        DTC\Common\Interfaces\GestionRh\IServiceRh: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Service
+                        DTC\Common\Interfaces\GestionRh\IQuotite: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Quotite
+                        DTC\Common\Interfaces\Organization\ISourceOrga: DTC\Modules\GestionReservationAuto\Entity\Organization\SourceOrga
+                        DTC\Common\Interfaces\Vehicule\IVehicule: DTC\Modules\GestionReservationAuto\Entity\Vehicule\Vehicule
+                        DTC\Common\Interfaces\Vehicule\IDha: DTC\Modules\GestionReservationAuto\Entity\Vehicule\Dha
+                    mappings:
+                        Type:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Type
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/GestionRh
+                            use_simple_annotation_reader: false
+                        Assignment:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Assignment
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/GestionRh
+                            use_simple_annotation_reader: false
+                        SourceOrga:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Organization\SourceOrga
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/Organization
+                            use_simple_annotation_reader: false 
+                        Vehicule:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Vehicule\Vehicule
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/Vehicule
+                            use_simple_annotation_reader: false
+                        Dha:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Vehicule\Dha
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/Dha
+                            use_simple_annotation_reader: false 
+                        Agent:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Agent
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/GestionRh
+                            use_simple_annotation_reader: false
+                        SourceAgent:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\GestionRh\SourceAgent
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/GestionRh
+                            use_simple_annotation_reader: false
+                        Quotite:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\GestionRh\Quotite
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity/GestionRh
+                            use_simple_annotation_reader: false
+                        User:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\User
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity
+                            use_simple_annotation_reader: false
+                        Voiture:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Voiture
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity
+                            use_simple_annotation_reader: false
+                        Perimetre:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Perimetre
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity
+                            use_simple_annotation_reader: false
+                        Reservation:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Reservation
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity
+                            use_simple_annotation_reader: false
+                        Registre:
+                            type: annotation
+                            namespace: DTC\Modules\GestionReservationAuto\Entity\Registre
+                            path: %parameters_path_rootModules%GestionReservationAuto/Entity
+                            use_simple_annotation_reader: false
+################################################################################

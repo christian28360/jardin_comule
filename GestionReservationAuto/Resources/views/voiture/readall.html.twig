@@ -1,0 +1,65 @@
+{%set menu = 'voiture' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+
+{% block content %}
+    <h3>Liste des voitures</h3>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>#</th>
+                <th>Immatriculation</th>
+                <th>Modèle</th>
+                <th>Service</th>
+                <th>Statut</th>
+                <th>Supprimer</th>
+                </thead>
+                {% for vehicule in vehicules %}
+                    <tr>
+                        <td>{{vehicule.vehCodeParc}}</td>
+                        <td>{% filter upper %}{{vehicule.vehImmat}}{% endfilter %}</td>
+                        <td>{% filter upper %}{{vehicule.mrqLibelle}}-{{vehicule.mdlLibelle}}{% endfilter %}</td>
+                        <td>{{vehicule.locSourceOrga.entLibelle}}</td>
+                        <td>{%if vehicule.voiture.statut == "attribuer" %}
+                            attribué
+                        {%else%}
+                            {{vehicule.voiture.statut}}
+                            {%endif%}
+                            </td>
+                            <td><a href="{{ path('gestion-reservation-auto-voiture-delete', {'id': vehicule.voiture.idVoiture}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endblock %}
+                    {% block javascripts %}
+                        {{parent()}}
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                var table = $('#myTable').DataTable({
+                                    "language": {
+                                        "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                                    },
+                                    "order": [[0, "desc"]]
+                                });
+
+                                $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                                    var body = $(table.table().body());
+
+                                    var txtSearchOriginal = this.value;
+                                    var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                                    table.search(
+                                            txtSearchRewrite
+                                            ).draw();
+
+                                    body.highlight([txtSearchOriginal, txtSearchRewrite]);
+                                });
+                            });
+                        </script>
+                    {%endblock%}

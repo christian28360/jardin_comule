@@ -1,0 +1,40 @@
+<link href="{{ baseRoutePrefix }}/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="{{ baseRoutePrefix }}/css/common/global.css" rel="stylesheet" />
+<link href="{{ baseRoutePrefix }}/css/modules/gestionReservationAuto/global.css" rel="stylesheet" />
+{#<h3>{{res.voiture.vehicule}}xxx</h3>#}
+
+<div class="row w11">
+    <div class="col-md-1"></div>
+    <div class="col-md-8">
+
+        <table class="table">
+            <caption><h2>{{ (res.voiture.vehicule)}}</h2></caption>
+            <tbody>
+                <tr>
+                    <td class="text-right"><b>Date de début</b></td>
+                    <td class="text-left">{{res.dateDebut|date('d/m/Y H:m')}}<br></td>
+                </tr>
+                <tr>
+                    <td class="text-right"><b>Date de fin</b></td>
+                    <td class="text-left">{{res.dateFin|date('d/m/Y H:m')}}<br/></td>
+                </tr>
+                <tr>
+                    <td class="text-right"><b>Par</b></td>
+                    <td class="text-left">{{res.user.nom}} {{res.user.prenom}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right"><b>Départ</b></td>
+                    <td class="text-left">{{res.depart}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right"><b>Destination</b></td>
+                    <td class="text-left">{{res.destination}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right"><b>Motif</b></td>    
+                    <td class="text-left">{{res.motif}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

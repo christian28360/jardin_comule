@@ -1,0 +1,18 @@
+#
+# INCLUDE
+################################################################################
+imports:
+    - { resource: config_dev.yml }
+################################################################################
+
+#
+# CONFIGURATION
+################################################################################
+optim:
+    mail:
+        configuration:
+            to: christian.alcon@laposte.fr
+    import:
+        configuration:
+            dataPath: %parameters_path_root%data-local/Gestionreservationauto/
+################################################################################

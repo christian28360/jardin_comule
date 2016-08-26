@@ -1,0 +1,66 @@
+{%set menu = 'reservation' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+{% block content %}
+    <h3>Historique des réservations</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>#</th>
+                <th>Utilisateur</th>
+                <th>Voiture</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Date création</th>
+                <th>Départ</th>
+                <th>Destination</th>
+                <th>Distance</th>
+                <th>Motif</th>
+                </thead>
+                {% for res in lesReservations %}
+                    <tr>
+                        <td>{{res.idReservation}}</td>
+                        <td>{{res.user.nom}} {{res.user.prenom}}</td>
+                        <td>{{res.voiture.vehicule.vehImmat}}</td>
+                        <td>{{res.dateDebut|date('d/m/Y H')}}h</td>
+                        <td>{{res.dateFin|date('d/m/Y H')}}h</td>
+                        <td>{{res.dateCreation|date('d/m/Y')}}</td>
+                        <td>{{res.depart}}</td>
+                        <td>{{res.destination}}</td>
+                        <td>{{res.distance}} Km</td>
+                        <td>{{res.motif}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                },
+                "order": [[5, "desc"]]
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{%endblock%}

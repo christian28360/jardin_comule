@@ -1,0 +1,17 @@
+{%set menu = 'voiture' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+    <h3>Ajouter une voiture</h3>
+    {{ form_start(form, { 'attr': { 'role': 'form' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+    {% include 'src/GestionReservationAuto/Resources/views/voiture/fragments/form.html.twig' %}
+    <div class="row">
+        <div class="form-group col-md-6">
+            <input type="submit" name="submit" value="Valider" class="btn btn-default" />
+            <a href="{{ path('gestion-reservation-auto-voiture') }}"class="btn btn-danger">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

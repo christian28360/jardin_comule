@@ -1,0 +1,22 @@
+{# empty Twig template #}
+<div class='row'>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+            {{ form_label(form.dateDebut) }}
+            {{ form_errors(form.dateDebut) }}
+            {{ form_widget(form.dateDebut, { 'attr': { 'class': 'form-control changeable'} }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+            {{ form_label(form.dateFin) }}
+            {{ form_errors(form.dateFin) }}
+            {{ form_widget(form.dateFin, { 'attr': { 'class': 'form-control changeable' } }) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+{{ form_rest(form) }}

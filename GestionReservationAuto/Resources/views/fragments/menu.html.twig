@@ -1,0 +1,38 @@
+<ul class="nav navbar-nav">
+    <li{% if menu == 'homepage' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-homepage') }}">Accueil</a></li>
+    <li{% if menu == 'planning' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-calendar') }}">Planning</a></li>
+    <li{% if menu == 'reserver' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-reservation-create') }}">Réserver</a></li>
+    {%if user is not null and user.voitureAttribue != null %}<li{% if menu == 'recurrence' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-recurrence-create') }}">Récurrence</a></li>{%endif%}
+    <li{% if menu == 'mesReserv' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-reservation-user') }}">Mes réservations</a></li>
+    <li{% if menu == 'registre' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-registre-create') }}">Registre</a></li>
+    <li{% if menu == 'profil' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-user-update-me') }}">Profil</a></li>
+</ul>
+
+{% if user is not null %}
+    {% if user.grade == 'admin' %}
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li{% if menu == 'voiture' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-voiture') }}">Voiture</a></li>
+                    <li{% if menu == 'user' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-user') }}">Utilisateur</a></li>
+                    <li{% if menu == 'reservation' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-reservation') }}">Réservation</a></li>
+                    <li{% if menu == 'perimetre' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-perimetre-readall') }}">Périmètre</a></li>
+                </ul>
+            </li>
+        </ul>
+    {% endif %}
+    {% if user.grade == 'gestionnaire' %}
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li{% if menu == 'voiture' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-voiture-service') }}">Voiture</a></li>
+                    <li{% if menu == 'user' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-user-service') }}">Utilisateur</a></li>
+                    <li{% if menu == 'reservation' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-reservation-service') }}">Réservation</a></li>
+                    <li{% if menu == 'gestionRegistre' %} class="active"{% endif %}><a href="{{ path('gestion-reservation-auto-registre-read-service') }}">Registre</a></li>
+                </ul>
+            </li>
+        </ul>
+    {% endif %}
+{% endif %}

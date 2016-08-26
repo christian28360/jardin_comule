@@ -1,0 +1,16 @@
+{# empty Twig template #}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.libelle) }}
+        {{ form_errors(form.libelle) }}
+        {{ form_widget(form.libelle, { 'attr': { 'class': 'form-control'} }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.regate) }}
+        {{ form_errors(form.regate) }}
+        {{ form_widget(form.regate, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+{{ form_rest(form) }}

@@ -1,0 +1,22 @@
+{# empty Twig template #}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.commentaire) }}
+        {{ form_errors(form.commentaire) }}
+        {{ form_widget(form.commentaire, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.statut) }}
+        {{ form_errors(form.statut) }}
+        {{ form_widget(form.statut, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.vehicule) }}
+        {{ form_errors(form.vehicule) }}
+        {{ form_widget(form.vehicule, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>

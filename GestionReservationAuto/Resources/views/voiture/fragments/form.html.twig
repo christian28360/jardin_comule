@@ -1,0 +1,37 @@
+{# empty Twig template #}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.immatriculation) }}
+        {{ form_errors(form.immatriculation) }}
+        {{ form_widget(form.immatriculation, { 'attr': { 'class': 'form-control'} }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.modele) }}
+        {{ form_errors(form.modele) }}
+        {{ form_widget(form.modele, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.commentaire) }}
+        {{ form_errors(form.commentaire) }}
+        {{ form_widget(form.commentaire, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.service) }}
+        {{ form_errors(form.service) }}
+        {{ form_widget(form.service, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.statut) }}
+        {{ form_errors(form.statut) }}
+        {{ form_widget(form.statut, { 'attr': { 'class': 'form-control' } }) }}
+    </div>
+</div>
+ {{ form_rest(form) }}

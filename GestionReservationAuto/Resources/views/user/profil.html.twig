@@ -1,0 +1,33 @@
+{%set menu = 'profil' %}
+{#{% set route = 'profil' %}#}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>{{ menu }}</li>
+    <li>{{ etat }}</li>
+    {% endblock %}
+
+{% block content %}
+    <h3>{{ etat }} du profil</h3>
+    
+    {% if mode == 'advanced' %}
+        {% include 'src/GestionReservationAuto/Resources/views/user/fragments/afficheNomUserFromAdmin.html.twig' %}
+    {% else %}
+        {% include 'src/GestionReservationAuto/Resources/views/user/fragments/afficheNomUserConnected.html.twig' %}
+    {% endif %}
+        
+    {% include 'src/GestionReservationAuto/Resources/views/user/fragments/form.html.twig' %}
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            // Focus sur le premier champ d'input
+            $("input:first").focus();
+        });
+    </script> 
+{% endblock %}

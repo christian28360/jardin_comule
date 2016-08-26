@@ -1,0 +1,88 @@
+{%set menu = 'reserver' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+{% block content %}
+    <h3>Créer une réservation pour un utilisateur</h3>
+    {{ form_start(form, { 'attr': { 'role': 'form', 'class': 'form-horizontal' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+    
+    {% include 'src/GestionReservationAuto/Resources/views/reservation/fragments/form.html.twig' %}
+    
+    {{ form_end(form) }}
+    
+    
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}    
+    {{parent()}}
+    <script type="text/javascript">
+    $(document).ready(function (){
+        
+        $("#Reservation_voiture").empty();
+        $("#Reservation_user").empty();
+        
+        $('.datepicker-widget').datepicker({
+            todayBtn: true,
+            language: "fr",
+            multidate: false,
+            daysOfWeekDisabled: "0,6",
+            autoclose: true,
+            todayHighlight: true
+        }).on('changeDate', function(e){
+            loadVehicle();
+        });
+        
+        function loadVehicle()
+        {
+            var form_data = $("form").serialize();
+            //envoi au controller
+            $.ajax({
+                url: "findVoitureAndUser",
+                async : false,
+                type: 'POST',
+                data: form_data,   
+                success: function(data)
+                {   
+                    var dataVoitures = data.voitures;
+                    var dataUsers = data.users;
+                    
+                    //vider les selects
+                    $("#Reservation_voiture").empty();
+                    $("#Reservation_user").empty();
+                    
+                    $.each(dataVoitures, function(key, val) {
+                        $('#Reservation_voiture')
+                                .append($("<option></option>")
+                                .attr("value", val.idVoiture).text(
+                                    val.vehicule.vehImmat 
+                                    + ' '
+                                    + val.vehicule.mdlLibelle 
+                                    + ' '
+                                    + val.commentaire
+                                    + ((val.statut == 'Attribuer') ? ' attribuée' : '')
+                                ));
+                    });
+                    $.each(dataUsers, function(key, val) {
+                        $('#Reservation_user')
+                                .append($("<option></option>")
+                                .attr("value", val.idUser).text(
+                                    val.sourceAgent.agePrenomUsuel 
+                                    + ' '
+                                    + val.sourceAgent.ageNomUsuel 
+                                ));
+                    });
+                }
+            });
+            
+            
+        }
+        
+        $(document).on("change", ".changeable", function(e){
+            e.preventDefault();
+            loadVehicle();
+            return false;
+        });
+    });                                
+</script>
+{% endblock %}{# empty Twig template #}

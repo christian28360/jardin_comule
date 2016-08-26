@@ -1,0 +1,14 @@
+{%set menu = 'user' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+
+    <h3>Modifier un utilisateur</h3>
+
+    {% include 'src/GestionReservationAuto/Resources/views/user/fragments/form.html.twig'
+            with {  'currentUser' : user.sourceAgent, 
+                    'hierarchique' : user.hierarchique }
+    %}
+
+{% endblock %}

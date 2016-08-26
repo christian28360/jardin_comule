@@ -1,0 +1,65 @@
+{%set menu = 'perimetre' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+
+
+{% block content %}
+    <h3>Liste des Périmètres</h3>
+    <div class="pull-right">
+        <a href="{{ path('gestion-reservation-auto-perimetre-create') }}"class="btn btn-sm btn-primary">Ajouter Périmètre</a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>#</th>
+                <th>Libelle</th>
+                <th>Service</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+                </thead>
+                {% for perim in lesPerim %}
+                    <tr>
+                        <td>{{perim.idPerimetre}}</td>
+                        <td>{{perim.libelle}}</td>
+                        <td>
+                            {% for ser in perim.services%}
+                                {{ser.regCode}} {{ ser.entLibelle }}<br/>
+                            {% endfor %}
+                        </td>
+                        <td><a href="{{ path('gestion-reservation-auto-manage-perimetre', {'perimetre': perim.idPerimetre}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+
+                        <td></td>    
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                }
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{%endblock%}

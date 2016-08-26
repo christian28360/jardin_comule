@@ -1,0 +1,106 @@
+{%set menu = 'mesReserv' %}
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Mes réservations</h3>
+            <p>Cette icône <span class="glyphicon glyphicon-envelope"></span> vous envoie un mail contenant le bon de remisage à domicile.</p>
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>MàJ</th>
+                <th>Voiture</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Départ</th>
+                <th>Destination</th>
+                <th>Distance</th>
+                <th>Motif</th>
+                <th colspan="2">Remisage<br >domicile</th>
+                <th>Signature supérieur</th>
+                    {#                <th>Remisage à domicile</th>#}
+                <th>Annuler</th>
+                </thead>
+                {% for res in lesReservations %}
+                    <tr>
+                        <td class="text-center w1">
+                            <a href="{{ path('gestion-reservation-auto-reservation-update', {'id': res.idReservation} ) }}"
+                               title="Modifier la réservaation"
+                               alt="Modifier la réservaation" >
+                                <span class="glyphicon glyphicon-pencil">&nbsp;
+                                </span>
+                            </a>
+                        </td>
+                        <td>{{res.voiture.vehicule.vehImmat}}</td>
+                        <td>{{res.dateDebut|date('d/m/Y H:i')}}</td>
+                        <td>{{res.dateFin|date('d/m/Y H:i')}}</td>
+                        <td>{{res.depart}}</td>
+                        <td>{{res.destination}}</td>
+                        <td>{{res.distance}} Km</td>
+                        <td>{{res.motif}}</td>
+                        <td class="text-right">
+                            {% if res.remisage %}
+                                <span class="glyphicon glyphicon-ok"></span>
+                            {% endif %}
+                        </td>
+                        {#                        <td>
+                                                    {% if res.dateDebut|date('d-m-Y') != res.dateFin|date('d-m-Y') and res.signatureAgent == null %}
+                                                        <a href="{{ path('gestion-reservation-auto-reservation-signature-agent', {'id': res.idReservation}) }}"><button type="button" class="btn btn-xs btn-warning">Signer</button></a>
+                                                    {% else %}
+                                                        {{res.signatureAgent}}
+                                                        <span class="glyphicon glyphicon-ok"></span>
+                                                    {% endif %}
+                                                </td>
+                        #}
+                        <td class="text-left">
+                            {% if res.dateDebut|date('d-m-Y') != res.dateFin|date('d-m-Y') %}
+                                <a href="{{ path('gestion-reservation-auto-reservation-send-bon-remisage', {'id': res.idReservation}) }}">
+                                    <span class="glyphicon glyphicon-envelope">
+                                    </span>
+                                </a>
+                            {% endif %}
+
+                        </td>
+                        <td>{{res.signatureSuperieur}}</td>
+                        {#                        <td>
+                                                    {% if res.dateDebut|date('d-m-Y') != res.dateFin|date('d-m-Y') %}
+                                                        <a href="{{ path('gestion-reservation-auto-reservation-send-bon-remisage', {'id': res.idReservation}) }}">
+                                                            <span class="glyphicon glyphicon-envelope">
+                                                            </span>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                        #}
+                        <td>{%if date(res.dateFin) > date('now')%}<a href="{{ path('gestion-reservation-auto-reservation-delete', {'id': res.idReservation}) }}"><span class="glyphicon glyphicon-remove"></span></a>{%endif%}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                },
+                "order": [[1, "desc"]]
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{%endblock%}

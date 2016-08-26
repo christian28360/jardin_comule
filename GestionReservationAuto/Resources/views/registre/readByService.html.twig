@@ -1,0 +1,68 @@
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{%set menu = 'gestionRegistre' %}
+
+{% block content %}
+    <h3>Liste des registres du service</h3>
+    <p>Cette icône <span class="glyphicon glyphicon-envelope"></span> vous envoie un mail contenant le registre et son contenu.</p>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>Utilisateur</th>
+                <th>Date création</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Signature Agent</th>
+                <th>Signature supérieur</th>
+                <th>Recevoir par email</th>
+                </thead>
+                {% for reg in lesRegistre %}
+                    <tr>
+                        <td>{{reg.user.nom}} {{reg.user.prenom}}</td>
+                        <td>{{reg.dateCreation|date('d/m/Y')}}</td>
+                        <td>{{reg.dateDebut|date('d/m/Y H')}}h</td>
+                        <td>{{reg.dateFin|date('d/m/Y H')}}h</td>
+                        <td>{{reg.signatureAgent}}</td>
+                        {% if reg.dateDebut|date('d-m-Y') != reg.dateFin|date('d-m-Y')%}
+                            {% if reg.signatureSuperieur != null %}
+                                <td>{{reg.signatureSuperieur}}</td>
+                            {%else%}
+                                <td> <a href="{{ path('gestion-reservation-auto-registre-signature-superieur', {'id': reg.idRegistre}) }}"class="btn btn-xs btn-warning">Signer</a></td>
+                            {%endif%}
+                        {%else%}
+                            <td></td>
+                        {%endif%}
+                        <td>{%if reg.signatureAgent != null and reg.signatureSuperieur != null%}<a href="{{ path('gestion-reservation-auto-registre-send-superieur', {'id': reg.idRegistre}) }}"><span class="glyphicon glyphicon-envelope"></span></a>{%endif%}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                },
+                "order": [[1, "desc"]]
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{%endblock%}

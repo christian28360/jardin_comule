@@ -1,0 +1,40 @@
+{% block content %}
+        <style type='text/css'>
+            #regles{background-color:silver;}
+            #regles p{margin-left: 10px;}
+            table th td{border: 1px solid black;border-collapse: collapse;}
+	</style>
+	<h2 align='center'>Registre des réservations</h2><br/>
+        <b>Agent :</b> {{reg.user.nom}} {{reg.user.prenom}}<br/><br/>
+        <b>Identifiant :</b> {{reg.user.idUser}}<br/><br/>
+        <b>Service :</b> {{reg.user.sourceAgent.sourceOrgaAffectectation.regCode}} {{reg.user.sourceAgent.sourceOrgaAffectectation.entLibelle}}<br/><br/>
+        <div class="clearfix"></div>
+        <table class="table table-hover" id="myTable">
+            <thead>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Voiture</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Date début</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Date fin</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Date création</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Destination</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Distance (km)</th>
+                <th style="border: solid 1px black;boder-collapse: collapse;">Motif</th>
+            </thead>
+            {% for res in lesRes %}
+                <tr>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.voiture.vehicule.vehImmat}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.dateDebut|date('d/m/Y ')}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.dateFin|date('d/m/Y ')}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.dateCreation|date('d/m/Y')}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.destination}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.distance}}</td>
+                    <td style="border: solid 1px black;boder-collapse: collapse;">{{res.motif}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+        <b>Code du registe : </b>{{reg.idRegistre}}<br/><br/>
+        <b>Signature agent : </b>{{reg.signatureAgent}}<br/><br/>
+        <b>Signature supérieur :</b>{{reg.signatureSuperieur}}<br/><br/>
+        
+	
+        
+{% endblock %}

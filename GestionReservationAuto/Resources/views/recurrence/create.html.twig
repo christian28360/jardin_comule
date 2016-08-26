@@ -1,0 +1,34 @@
+{%set menu = 'recurrence' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+    <h3>Créer une réservation récurrente</h3>
+    {{ form_start(form, { 'attr': { 'role': 'form', 'class': 'form-horizontal' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+    {% include 'src/GestionReservationAuto/Resources/views/recurrence/fragments/form.html.twig' %}
+
+    
+    
+    {{ form_end(form) }}
+    
+    
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}    
+    {{parent()}}
+        
+    <script type="text/javascript">
+    $(document).ready(function (){
+        
+        $('.datepicker-widget').datepicker({
+            todayBtn: true,
+             language: "fr",
+            multidate: false,
+            daysOfWeekDisabled: "0,6",
+            autoclose: true,
+            todayHighlight: true
+        });       
+        
+    });                                
+</script>
+{% endblock %}

@@ -1,0 +1,8 @@
+#
+# CONFIGURATION
+################################################################################
+gpa:
+    mail:
+        configuration:
+            from: 
+                - gra.dtc@laposte.fr

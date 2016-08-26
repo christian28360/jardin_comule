@@ -1,0 +1,241 @@
+gestion-reservation-auto-grade-menu:
+  path: /grade-menu/{menu}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\MenuController::gradeMenuAction' }
+  requirements: 
+      menu: \w+
+      
+gestion-reservation-auto-homepage:
+  path: /
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\DefaultController::homeAction' }
+
+gestion-reservation-auto-user:
+  path: /user
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminUserController::homeAction' }
+
+## route non invoquée ???
+#gestion-reservation-auto-user-be-admin:
+#  path: /user/beAdmin
+#  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\UserController::beAdminAction' }
+
+gestion-reservation-auto-user-create:
+  path: /user/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\UserController::createAction' }
+  methods: [GET, POST]
+
+gestion-reservation-auto-user-update-me:
+  path: /user/profil
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\UserController::profilAction' }
+  methods: [GET, POST]
+
+gestion-reservation-auto-user-delete:
+  path: /user/delete/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminUserController::deleteAction' }
+  methods: [GET, POST]
+
+gestion-reservation-auto-user-update:
+  path: /user/update/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminUserController::updateAction' }
+  methods: [GET, POST]
+
+gestion-reservation-auto-user-service:
+  path: /user/service
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireUserController::homeAction' }
+
+gestion-reservation-auto-user-delete-service:
+  path: /user/delete/service/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireUserController::deleteAction' }
+  methods: [GET, POST]
+  requirements: 
+      id: \w+
+
+gestion-reservation-auto-user-update-service:
+  path: /user/update/service/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireUserController::updateAction' }
+  methods: [GET, POST]
+  requirements: 
+      id: \w+
+
+gestion-reservation-auto-voiture:
+  path: /voiture
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminVoitureController::homeAction' }
+
+gestion-reservation-auto-voiture-create:
+  path: /voiture/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminVoitureController::createAction' }
+
+gestion-reservation-auto-voiture-update:
+  path: /voiture/update/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminVoitureController::updateAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-voiture-delete:
+  path: /voiture/delete/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminVoitureController::deleteAction' }
+
+gestion-reservation-auto-voiture-service:
+  path: /voiture/service
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireVoitureController::homeAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-voiture-create-service:
+  path: /voiture/service/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireVoitureController::createAction' }
+
+gestion-reservation-auto-voiture-update-service:
+  path: /voiture/service/update/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireVoitureController::updateAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-voiture-delete-service:
+  path: /voiture/service/delete/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireVoitureController::deleteAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-voiture-manage:
+  path: /voiture/service/manage
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireVoitureController::manageVehiculeAction' }
+
+gestion-reservation-auto-reservation:
+  path: /reservation
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminReservationController::homeAction' }
+
+gestion-reservation-auto-reservation-create:
+  path: /reservation/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::createAction' }
+
+gestion-reservation-auto-reservation-update:
+  path: /reservation/update
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::updateAction' }
+
+gestion-reservation-auto-reservation-find-voiture:
+  path: /reservation/findVoiture
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::findVoitureAction' }
+
+gestion-reservation-auto-reservation-find-voiture-and-user:
+  path: /reservation/findVoitureAndUser
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::findVoitureAndUserAction' }
+
+gestion-reservation-auto-reservation-signature-agent:
+  path: /reservation/signer/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::signatureAgentAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-reservation-delete:
+  path: /reservation/delete/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::deleteAction' }
+
+gestion-reservation-auto-reservation-user:
+  path: /reservation/user
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::myReservationAction' }
+
+gestion-reservation-auto-reservation-send-bon-remisage:
+  path: /reservation/send/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::sendBonRemisageAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-reservation-service:
+  path: /reservation/service
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::serviceReservationAction' }
+
+gestion-reservation-auto-reservation-signature-superieur:
+  path: /reservation/signers/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::signatureSuperieurAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-reservation-send-bon-remisage-superieur:
+  path: /reservation/superieur/send/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::sendBonRemisageAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-reservation-create-for-user:
+  path: /reservation/createforuser
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::createForUserAction' }
+
+gestion-reservation-auto-calendar:
+  path: /planning
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\CalendarController::getCalendarAction' }
+
+gestion-reservation-auto-calendar-feed:
+  path: /feedCalendar
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\CalendarController::feedCalendarAction' }
+
+gestion-reservation-auto-calendar-find:
+  path: /calendar/res/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\CalendarController::findResAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-recurrence-create:
+  path: /recurrence/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\RecurrenceController::createAction' }
+
+gestion-reservation-auto-recurrence-signature-agent:
+  path: /recurrence/signer/{date}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\RecurrenceController::signatureAgentAction' }
+
+gestion-reservation-auto-recurrence-delete:
+  path: /recurrence/delete/{date}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\RecurrenceController::deleteAction' }
+
+gestion-reservation-auto-registre-create:
+  path: /registre/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::registreAction' }
+
+gestion-reservation-auto-registre-delete:
+  path: /registre/delete/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::deleteRegistreAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-registre-signature-agent:
+  path: /registre/signer/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::signatureAgentRegistreAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-registre-read-service:
+  path: /registre/service
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::readRegistreByServiceAction' }
+
+gestion-reservation-auto-registre-signature-superieur:
+  path: /registre/signers/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::signatureRegistreSuperieurAction' }
+  requirements: 
+      id: \d+
+
+gestion-reservation-auto-registre-send:
+  path: /registre/send/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\ReservationController::sendRegistreAction' }
+
+gestion-reservation-auto-registre-send-superieur:
+  path: /registre/send/superieur/{id}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\GestionnaireReservationController::sendRegistreAction' }
+  requirements: 
+      id: \d+ 
+
+gestion-reservation-auto-perimetre-create:
+  path: /perimetre/create
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminServiceController::createPerimetreAction' }
+
+gestion-reservation-auto-manage-perimetre:
+  path: /perimetre/manage/{perimetre}
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminServiceController::managePerimetreAction' }
+  requirements: 
+    perimetre: \d+
+  methods: [GET, POST]
+
+gestion-reservation-auto-perimetre-find-service:
+  path: /perimetre/manage/findService
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminServiceController::findServiceAction' }
+
+gestion-reservation-auto-perimetre-readall:
+  path: /perimetre
+  defaults: { _controller: 'DTC\Modules\GestionReservationAuto\Controller\AdminServiceController::perimetreIndexAction' }

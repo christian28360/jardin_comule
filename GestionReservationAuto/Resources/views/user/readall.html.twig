@@ -1,0 +1,74 @@
+{%set menu = 'Administration' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>{{ menu }}</li>
+    <li>Liste tous les utilisateurs</li>
+{% endblock %}
+
+{% block content %}
+    <h3>Liste des utilisateurs</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <th>RH</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Grade</th>
+                <th>Mail</th>
+                <th>Perimetre</th>
+                <th>Service</th>
+                <th></th>
+                <th></th>
+                </thead>
+
+                {% for use in lesUser %}
+                    <tr>
+                        <td class="text-left">{{use.idUser}}</td>
+                        <td class="text-left">{{use.nom}}</td>
+                        <td class="text-left">{% filter title %}{{use.prenom}}{% endfilter %}</td>
+                        <td class="text-left">{{use.grade}}</td>
+                        <td class="text-left">{{use.sourceAgent.ctcMessagerie}}</td>
+                        {%if use.perimetre is empty%}
+                            <td></td>
+                        {%else%}
+                            <td class="text-left">{{use.perimetre.libelle}}</td>
+                        {%endif%}
+                        <td class="text-left">{{use.sourceAgent.sourceOrgaAffectectation.regCode}} - {{use.sourceAgent.sourceOrgaAffectectation.entLibelle}}</td>
+                        <td class="text-left"><a href="{{ path('gestion-reservation-auto-user-update', {'id': use.idUser}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td class="text-left"><a href="{{ path('gestion-reservation-auto-user-delete', {'id': use.idUser}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                },
+                "order": [[0, "desc"]]
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{%endblock%}

@@ -1,0 +1,94 @@
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{%set menu = 'registre' %}
+
+{% block content %}
+    <h3>Registre </h3>
+
+    <table class="table table-hover" id="myTable">
+        <thead>
+        <th>Date création</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Signature agent</th>
+        <th>Signature supérieur</th>
+        <th>Recevoir par mail</th>
+        <th>Supprimer</th>
+    </thead>
+    {% for reg in lesReg %}
+        <tr>
+            <td>{{reg.dateCreation|date('d/m/Y')}}</td>
+            <td>{{reg.dateDebut|date('d/m/Y ')}}</td>
+            <td>{{reg.dateFin|date('d/m/Y ')}}</td>
+            <td>{{reg.signatureAgent}}</td>
+            <td>{{reg.signatureSuperieur}}</td>
+            <td>{%if reg.signatureAgent != null and reg.signatureSuperieur != null%}<a href="{{ path('gestion-reservation-auto-registre-send', {'id': reg.idRegistre}) }}"><span class="glyphicon glyphicon-envelope"></span></a>{%endif%}</td>
+            <td><a href="{{ path('gestion-reservation-auto-registre-delete', {'id': reg.idRegistre}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+    {%endfor%}
+</table>
+{{ form_start(form, { 'attr': { 'role': 'form' }, 'method': 'post' }) }}
+{{ form_errors(form) }}
+{% include 'src/GestionReservationAuto/Resources/views/registre/fragments/form.html.twig' %}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="submit" name="submit" value="Valider" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
+
+
+{% endblock %}{# empty Twig template #}
+{% block javascripts %}    
+    {{parent()}}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("form input.date").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1
+            }).attr("readonly", "readonly");
+
+            $('#JourneeForm_dateJourneeDate').datepicker({
+                todayBtn: true,
+                language: "fr",
+                multidate: false,
+                daysOfWeekDisabled: "0,6",
+                autoclose: true,
+                todayHighlight: true});
+            $('#Registre_dateFin').datepicker({
+                todayBtn: true,
+                language: "fr",
+                multidate: false,
+                daysOfWeekDisabled: "0,6",
+                autoclose: true,
+                todayHighlight: true});
+            
+            var table = $('#myTable').DataTable({
+                "language": {
+                    "url": "{{ baseRoutePrefix }}/i18n/datatables.french.json"
+                },
+                "order": [
+                    [1, "desc"]
+                ]
+            });
+
+            $(document).on("keyup", ".dataTables_filter input[type=search]", function () {
+                var body = $(table.table().body());
+
+                var txtSearchOriginal = this.value;
+                var txtSearchRewrite = jQuery.fn.DataTable.ext.type.search.string(txtSearchOriginal);
+
+                table.search(
+                        txtSearchRewrite
+                        ).draw();
+
+                body.highlight([txtSearchOriginal, txtSearchRewrite]);
+            });
+        });
+    </script>
+{% endblock %}

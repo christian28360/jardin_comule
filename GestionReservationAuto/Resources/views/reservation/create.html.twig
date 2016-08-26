@@ -1,0 +1,180 @@
+{%set menu = 'reserver' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{ baseRoutePrefix }}/libraries/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <h3>Créer une réservation</h3>
+
+    {#    {{ dump(form.vars.value.dateDebut) }}#}
+
+    {{ form_start(form, { 'attr': { 'role': 'form', 'class': 'form-horizontal' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+    {% include 'src/GestionReservationAuto/Resources/views/reservation/fragments/form.html.twig' %}
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}    
+    {{parent()}}
+    <script type="text/javascript" src="{{ baseRoutePrefix }}/libraries/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="{{ baseRoutePrefix }}/libraries/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js" type="text/javascript"></script>
+    <script src="{{ baseRoutePrefix }}/js/common/bootbox.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#Reservation_voiture").empty();
+            $("#Reservation_user").empty();
+
+            var dtPickerDeb = $('.datepicker-widget').datetimepicker({
+                todayBtn: "linked",
+                orientation: "top auto",
+                calendarWeeks: true,
+                language: "fr",
+                daysOfWeekHighlighted: "0,6",
+                multidate: false,
+                daysOfWeekDisabled: "0,6",
+                autoclose: true,
+                todayHighlight: true,
+                startDate: '0d',
+                endDate: '+1y',
+                minuteStep: 15
+            });
+
+            $('.dateDebut').datetimepicker({
+                startDate: '+3'
+            });
+
+            $('.dateFin').datetimepicker({
+            });
+
+            $(".datepicker-widget").change(function () {
+                rechercheVehicule();
+            });
+
+            function rechercheVehicule() {
+                // voir si on a saisi les 2 dates
+                var dateDebut = $("input[name*='dateDebut']").val();
+                var dateFin = $("input[name*='dateFin']").val();
+                var saisDate = !(dateDebut === '' || dateFin === '');
+
+                if (saisDate) {
+                    if (dateFin < dateDebut) {
+                        bootbox.alert({
+                            title: 'ATTENTION',
+                            message: 'La date de fin est inférieure à la date de début<br />\n\
+                                        La recherche de véhicule disponible ne sera pas effectuée',
+                            callback: function () {
+                            }
+                        });
+                        return false;
+                    }
+                    var messAtt = bootbox.alert({
+                        title: 'Patientez',
+                        message: '<img src="{{ baseRoutePrefix }}/img/common/ajax-loader.gif" />\n\
+                            Recherche des véhicules disponibles pour la période sélectionnée',
+                        callback: function () {
+                        }
+                    });
+                    loadVehicle();
+                    messAtt.modal('hide');
+                    return false;
+                }
+                return false;
+            }
+            ;
+
+            /*
+             * 
+             $('.datepicker-widget').change(function () {
+             alert('perte focus datepicker');
+             };
+             */
+
+            /*
+             * reste à faire : mettre en place les exclusions de dates à partir du modèle ci-dessous :
+             * 
+             var nowTemp = new Date(); 
+             var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+             
+             var checkin = $('#dpd1').datepicker({
+             onRender: function (date) {
+             return date.valueOf() < now.valueOf() ? 'disabled' : '';
+             }
+             }).on('changeDate', function (ev) {
+             if (ev.date.valueOf() > checkout.date.valueOf()) {
+             var newDate = new Date(ev.date)
+             newDate.setDate(newDate.getDate() + 1);
+             checkout.setValue(newDate);
+             }
+             checkin.hide();
+             $('#dpd2')[0].focus();
+             }).data('datepicker');
+             var checkout = $('#dpd2').datepicker({
+             onRender: function (date) {
+             return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+             }
+             }).on('changeDate', function (ev) {
+             checkout.hide();
+             }).data('datepicker');
+             */
+
+            /*
+             $('.datepicker-widget').datepicker({
+             todayBtn: true,
+             language: "fr",
+             multidate: false,
+             daysOfWeekDisabled: "0,6",
+             autoclose: true,
+             todayHighlight: true
+             }).on('changeDate', function (e) {
+             loadVehicle();
+             });
+             */
+
+            function loadVehicle()
+            {
+                var form_data = $("form").serialize();
+                $("#Reservation_voiture").html("<option>Patientez, recherche de véhicule en cours ...</option>");
+
+                //envoi au controller
+                $.ajax({
+                    url: "findVoiture",
+                    async: false,
+                    type: 'POST',
+                    data: form_data,
+                    success: function (data)
+                    {
+                        var dataVoitures = data.voitures;
+                        //vider les selects
+                        $("#Reservation_voiture").empty();
+                        $("#Reservation_user").empty();
+                        if (dataVoitures.length === 0) {
+                            $("#Reservation_voiture").html("<option>Pas de véhicule disponible pour cette période</option>");
+                        } else {
+                            $('#Reservation_voiture').append($("<option value='-1'>-- sélectionnez un véhicule dans la liste ci-dessous --</option>"));
+                            $.each(dataVoitures, function (key, val) {
+                                $('#Reservation_voiture')
+                                        .append($("<option></option>")
+                                                .attr("value", val.idVoiture).text(
+                                                val.vehicule.vehImmat
+                                                + ' '
+                                                + val.vehicule.mdlLibelle
+                                                + ' '
+                                                + val.commentaire
+                                                ));
+                            });
+                            //$('#Reservation_voiture').click();
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+{% endblock %}

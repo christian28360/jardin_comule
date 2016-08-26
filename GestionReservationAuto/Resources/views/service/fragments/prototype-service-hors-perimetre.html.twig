@@ -1,0 +1,6 @@
+<a href="#" class="list-group-item" data-id="{{ idPlaceholder }}" data-libelle="{{ libellePlaceholder }}">
+    <em>{{ libellePlaceholder }}</em>
+    {% if graPerimetreService is defined %}
+        {{ form_widget(graPerimetreService) }}
+    {% endif %}
+</a>

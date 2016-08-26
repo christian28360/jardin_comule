@@ -1,0 +1,74 @@
+{% form_theme form 'src/GestionReservationAuto/Resources/views/form-template/custom_bootstrap_3_horizontal_layout.html.twig' %}
+
+<div class="row">
+    {#    <div class="col-lg-2 text-right">
+            <label for="Reservation_dateDebut_date" class="control-label">Date de prise :</label>
+        </div>
+    #}    
+    <div class="form-group col-lg-12 text-left">
+        {{ form_row(form.dateDebut, {'form_type': 'horizontal'}) }}
+        {#        {{ form_widget(form.dateDebut, { 'attr': { 'class': 'form-control datepicker-widget dateDebut' } }) }}#}
+   {# </div>
+    <div class="form-group col-lg-6 text-left">
+   #}     {{ form_row(form.dateFin, {'form_type': 'horizontal'}) }}
+        {#        {{ form_widget(form.dateDebut, { 'attr': { 'class': 'form-control datepicker-widget dateDebut' } }) }}#}
+    </div>
+    {#    <div class="col-lg-1">
+            {{ form_widget(form.dateDebut.time.hour, { 'attr': { 'class': 'form-control changeable' } }) }}
+        </div>
+        <div class="col-lg-1">
+            {{ form_widget(form.dateDebut.time.minute, { 'attr': { 'class': 'form-control changeable' } }) }}
+        </div>
+    #}
+</div>
+
+<div class="row">
+    {{ form_row(form.voiture, {'form_type': 'horizontal'})}}
+    {{ form_row(form.distance, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.depart, {'form_type': 'horizontal'})}}
+    {{ form_row(form.destination, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.motif, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.accompagnant1, {'form_type': 'horizontal'})}}
+    {{ form_row(form.accompagnant2, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.accompagnant3, {'form_type': 'horizontal'})}}
+    {{ form_row(form.accompagnant4, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.signatureSuperieur, {'form_type': 'horizontal'})}}
+    {{ form_row(form.signatureValidateur, {'form_type': 'horizontal'})}}
+</div>
+
+<div class="row">
+    {{ form_row(form.remisage, {'form_type': 'horizontal'})}}
+    {% if form.user is defined %}
+        {{ form_row(form.user, {'form_type': 'horizontal'})}}
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-xs-8 text-left">
+        <a href="{{ baseRoutePrefix}}/doc/modules/GestionReservationAuto/demande_utilisation_vehicule_personnel.pdf"
+           download="demande_utilisation_vehicule_personnel.pdf" target="_blank"
+           title="téléchargement du PDF">
+            <img src="{{ baseRoutePrefix}}/img/pdf.gif" />
+            formulaire de demande d'autorisation d'utilisation d'un véhicule personnel
+        </a>
+    </div>
+    <div class="col-xs-4 text-right">
+        {{ form_widget(form.save)}}
+        <a href="{{ path('gestion-reservation-auto-calendar')}}"class="btn btn-danger">Annuler</a>
+    </div>
+</div>

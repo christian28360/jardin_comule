@@ -1,0 +1,207 @@
+{%set menu = 'perimetre' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+    <h3>Ajouter des services au périmètre</h3>
+
+
+    {{ form_start(form, { 'attr': { 'role': 'form' }, 'method': 'post' }) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-md-5">
+            {{ form_label(form.perimetre) }}
+            {{ form_errors(form.perimetre) }}
+            {{ form_widget(form.perimetre) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <label>Rechercher un service avec un code REGATE :</label>
+            <div class="input-group">
+                {{ form_widget(form.filter) }}
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="go">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row widget-row">
+        <div class="col-md-5">
+            <label>Service trouvé :</label>
+            <div class="list-group"  id="available-list"></div>
+        </div>
+        <div class="col-md-2 text-center">
+            {{ form_widget(form.deny) }}
+            {{ form_widget(form.allow) }}
+        </div>
+        <div class="col-md-5 list-group"id="accredited-list" 
+             data-prototype="
+             {% filter escape %}
+                 {{ include('src/GestionReservationAuto/Resources/views/service/fragments/prototype-service-hors-perimetre.html.twig', { 
+                    'libellePlaceholder': '__libelle__', 
+                    'idPlaceholder': '__id__',
+                    'graPerimetreService': form.listeServices.vars.prototype
+                }) }}
+             {% endfilter %}">
+            {{ form_label(form.listeServices) }}
+            {% for serviceFormView in form.listeServices %}
+                {% if form.vars.value.services.containsKey(serviceFormView.vars.value) %}
+                    {% set sourceOrgaAffectectation = form.vars.value.services.get(serviceFormView.vars.value) %}
+
+                    {{ include('src/GestionReservationAuto/Resources/views/service/fragments/prototype-service-hors-perimetre.html.twig', { 
+                        'libellePlaceholder': sourceOrgaAffectectation.regCode ~' - '~sourceOrgaAffectectation.entLibelle, 
+                        'idPlaceholder': sourceOrgaAffectectation.code,
+                        'graPerimetreService': serviceFormView
+                    }) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <input type="submit" name="submit" value="Valider" class="btn btn-default" />
+            <a href="{{ path('gestion-reservation-auto-perimetre-readall') }}"class="btn btn-danger">Annuler</a>
+        </div>
+    </div>
+
+    <div class="hide">
+        {{ form_row(form.listeServices) }}
+    </div>
+
+    {{ form_end(form) }}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Items selection
+            $(document).on("click", ".list-group-item", function (e) {
+                e.preventDefault();
+                $(this).toggleClass("active");
+
+                return false;
+            });
+
+            // Allow users
+            $(document).on("click", "#Perimetre_allow", function (e) {
+                e.preventDefault();
+
+                $("#available-list > a.active").each(function () {
+                    var prototype = $("#accredited-list").data("prototype");
+                    var service = $(this).data("id");
+                    prototype = prototype.replace(/__id__/g, service)
+                            .replace(/__libelle__/g, $(this).data("libelle"))
+                            .replace(/__name__/g, service);
+
+                    $(this).remove();
+
+                    $("#accredited-list").append(prototype);
+                    $("#Perimetre_listeServices_" + service).val(service);
+                    refreshFilter();
+                });
+
+                return false;
+            });
+
+            // Deny users
+            $(document).on("click", "#Perimetre_deny", function (e) {
+                e.preventDefault();
+
+                $("#accredited-list > a.active").each(function () {
+                    $(this).remove();
+                    refreshFilter();
+                });
+
+                return false;
+            });
+
+            // Change role
+            $(document).on("change", "#Perimetre_perimetre", function (e) {
+                e.preventDefault();
+
+                window.location.replace($(this).data('url').replace('/0', '/' + $(this).val()));
+
+                return false;
+            });
+
+            // Available filter
+            $(document).on("click", "#go", function (e) {
+                e.preventDefault();
+                var nbExist = $('#accredited-list > a').filter(function () {
+                    var regex = new RegExp($('#Perimetre_filter').val(), "i");
+                    return String($(this).data('libelle')).match(regex);
+                }).length;
+
+                if (nbExist == 0) {
+                    //déclaration des variable à envoyez au controller
+                    var form_data = {"data": {
+                            "regate": $("#Perimetre_filter").val()
+                        }};
+                    //envoi au controller
+                    $.ajax({
+                        url: "findService",
+                        async: false,
+                        type: 'POST',
+                        data: form_data,
+                        success: function (data)
+                        {
+                            var responseData = data;
+                            
+                            if (responseData !== null)
+                            {
+                                /*for (var i = 0; i < responseData.length; i++)
+                                 {
+                                 options += '<option value="' + responseData[i].idVoiture + '">' + responseData[i].immatriculation + ' ' + responseData[i].commentaire + '</option>';
+                                 
+                                 }*/
+                                var link = '<a href="#" class="list-group-item" data-id="' + responseData.code + '" data-libelle="' + responseData.regCode + ' - ' + responseData.entLibelle + '">' + responseData.regCode + ' - ' + responseData.entLibelle + '</a>';
+                                //alert(link);
+                            }
+                            //envoyer le resultat dans la div
+                            $("#available-list").html(link);
+                        }
+                    });
+                } else {
+                    alert('EXISTE DEJA');
+                }
+            });
+        });
+
+        function refreshFilter()
+        {
+            $('#Perimetre_filter').val('');
+            $("#available-list > a").show();
+        }
+
+        function refuserToucheEntree(event)
+        {
+            // Compatibilité IE / Firefox
+            if (!event && window.event) {
+                event = window.event;
+            }
+            // IE
+            if (event.keyCode == 13) {
+                event.returnValue = false;
+                event.cancelBubble = true;
+            }
+            // DOM
+            if (event.which == 13) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }
+    </script>
+{% endblock %}

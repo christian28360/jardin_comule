@@ -1,0 +1,39 @@
+{%set menu = 'reserver' %}
+
+{% extends "src/GestionReservationAuto/Resources/views/layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <style type='text/css'>
+                #regles{background-color:silver; padding:10px}
+            </style>
+            <h3 align='center'>REMISAGE A DOMICILE</h3><br/>
+            <i>Cette autorisation doit pouvoir être présentée à tout moment.<br/>
+            Cette autorisation doit être imprimée en 2 exemplaires: un exemplaire pour l'utilisateur et un exemplaire pour la direction.</i><br/><br/>
+            Prériode de validité: du {{res.dateDebut|date('d-m-Y H')}}h au {{res.dateFin|date('d-m-Y H')}}h <br/><br/>
+            Demandeur : {{res.user.sourceAgent.agePrenomUsuel}}  {{res.user.sourceAgent.ageNomUsuel}}<br/><br/>
+            Etablissement ou service : {{res.user.sourceAgent.sourceOrgaAffectectation.entLibelle}}<br/><br/>
+            Adresse du domicile: {{res.user.adresse}} {{res.user.cp}} {{res.user.ville}}<br/><br/>
+            Aller simple domicile-travail: {{res.user.distanceDT}} Km (itinéraire le plus direct)<br/><br/>
+            Motif de l'autorisation : {{res.motif}}<br/><br/>
+            Immatriculation du véhicule: {{res.voiture.vehicule.vehImmat}}<br/><br/>
+            <div id='regles'>
+                <b>Règles d’utilisation :</b><ol>
+                <li>Les nécessités de service priment sur cette autorisation.</li>
+                <li>Le conducteur s’engage à remiser le véhicule sur un lieu autorisé et à prendre toutes mesures de sécurité pour protéger le véhicule et ses accessoires contre le vol.</li>
+                <li>En cas d’absences (congés, formation, …), le véhicule doit rester à disposition du service.</li>
+                <li>Le transport de personnes extérieures au service est interdit.</li>
+                <li>L’utilisation du véhicule pour des besoins personnels et privatifs est interdit.</li>
+                <li>Le conducteur est responsable des condamnations pénales et contraventions encourues.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2"><a href="{{ path('gestion-reservation-auto-reservation-signature-agent', {'id': res.idReservation}) }}"class="btn btn-success">Signer</a></div>
+        <div class="col-md-2"><a href="{{ path('gestion-reservation-auto-reservation-delete', {'id': res.idReservation}) }}"class="btn btn-danger">Annuler réservation</a></div>
+        </div>
+{% endblock %}    
