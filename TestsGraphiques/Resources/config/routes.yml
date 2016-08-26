@@ -1,0 +1,3 @@
+tests-graphiques-homepage:
+    path: /homepage/tests
+    defaults: { _controller: 'CHRIST\Modules\TestsGraphiques\Controller\DefaultController::homeAction' }

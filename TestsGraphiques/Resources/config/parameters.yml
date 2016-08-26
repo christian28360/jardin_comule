@@ -1,0 +1,17 @@
+parameters:
+    module: 'TestsGraphiques'
+    version:
+            numero: '0.0.1'
+            date:   Novembre 2015
+    path:
+        root: <?php dirname(dirname(__DIR__)); ?>/
+        rootCommon: <?php dirname(dirname(__DIR__)); ?>/app/
+        rootModules: <?php dirname(dirname(__DIR__)); ?>/src/
+        cache: <?php dirname(dirname(__DIR__)); ?>/cache/
+        prod: 
+    db:
+            driverClass: ~
+            host: localhost
+            port: ~
+            user: root
+            password:

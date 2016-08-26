@@ -1,0 +1,37 @@
+{% extends "app/Resources/views/layout.html.twig" %}
+
+{% block metaTitle %}Gestion activité de bowling{% endblock %}
+{% block title %}
+    Gestion personnelle activité bowling
+    {% include 'src/Bowling/Resources/views/fragments/titreModule.html.twig' %}
+{% endblock %}
+
+{% block headerPicture %}
+    <img src="{{ baseRoutePrefix }}/img/modules/bowling/tmbHook.gif" />
+    {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('homepage') }}">Portail</a></li>
+    <li><a href="{{ path('tests-graphiques-homepage') }}">Accueil</a></li>
+    {% endblock %}
+
+{% block menu %}
+    {% include 'src/Bowling/Resources/views/fragments/menu.html.twig' with {'menu': menu } %}
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ baseRoutePrefix }}/libraries/bootstrap-datepicker-master/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="{{ baseRoutePrefix }}/libraries/bootstrap-datepicker-master/js/locales/bootstrap-datepicker.fr.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            // script ici
+        });
+    </script>
+{% endblock %}

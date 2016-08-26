@@ -1,0 +1,66 @@
+#
+# DOCTRINE
+################################################################################
+doctrine:
+    orm:
+        configuration:
+            orm.ems.options:
+                christian:
+                    connection: christian
+                    mappings:
+                        journee:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Journee
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        tournoi:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Tournoi
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        organisateur:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Organisateur
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        serie:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Serie
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        score:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Score
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        bowling:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Bowling
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        typeJeu:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\TypeJeu
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        periode:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Periode
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        formation:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Formation
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        evenement:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Evenement
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+                        carnet:
+                            type: annotation
+                            namespace: CHRIST\Modules\Bowling\Entity\Carnet
+                            path: %parameters_path_rootModules%Bowling/Entity
+                            use_simple_annotation_reader: false
+################################################################################
